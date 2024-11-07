@@ -3,7 +3,7 @@ from tkinter import messagebox
 
 ventana= tk.Tk()
 ventana.title("Holaaa")
-notebook=ttk.Notebook(ventana)
+notebook=tk.Notebook(ventana)
 
 pestaña1=tk.Frame(notebook)
 pestaña2=tk.Frame(notebook)
