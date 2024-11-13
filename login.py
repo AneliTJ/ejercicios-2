@@ -11,7 +11,7 @@ def verificar_usuario():
             host='localhost',      
             user='root',          
             password='',  
-            database='meca'    
+            database='base_de_datos'    
             )
  
         cursor = conn.cursor()
