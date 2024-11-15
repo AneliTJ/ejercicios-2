@@ -43,14 +43,16 @@ def actualizar():
         listbox.delete(i)
         mostrar()
 
-def obtener():
+def obtenerR(event):
     name.delete(0, END)
     email.delete(0, END)
     password.delete(0, END)
     identificador.delete(0, END)
 
     renglon = listbox.selection()[0]
+    print (renglon)
     seleccion = listbox.set(renglon)
+    print (seleccion)
     identificador.insert(0, seleccion["Id"])
     name.insert(0, seleccion["Nombre"])
     email.insert(0, seleccion["Correo"])
@@ -103,7 +105,7 @@ for col in columnas:
     listbox.place(x=0, y=300)
  
 mostrar()
-listbox.bind("<Double-Button-1>",show)
+listbox.bind("<Double-Button-1>",obtenerR)
  
  
 root.mainloop()
