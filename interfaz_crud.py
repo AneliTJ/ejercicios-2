@@ -9,14 +9,53 @@ def show():
 
 def mostrar():
     mysqlC = mysql.connector.connect(host = "localhost", user="root", password="", database= "base_de_datos")
-    micursor=mysqlC.cursor()
-    micursor.execute("select * from usuarios")
-    lista = micursor.fetchall()
+    micursos=mysqlC.cursor()
+    micursos.execute("select * from usuarios")
+    lista = micursos.fetchall()
 
     for i, (id, nombre, correo, contraseña) in enumerate (lista, start=1):
         listbox.insert("", "end", values = (id, nombre, correo, contraseña))
         mysqlC.close()
- 
+
+def add():
+    usuario_add = name.get ()
+    correo_add = email.get()
+    contraseña_add = password.get()
+    id_add = identificador.get()
+    mysqlC = mysql.connector.connect(host = "localhost", user="root", password="", database= "base_de_datos")
+    micursos=mysqlC.cursor()
+    try:
+        micursos.execute(f"Insert into usuarios (id, nombre, correo , contraseña) values ('{id_add}','{usuario_add}', '{correo_add}','{contraseña_add}')")
+        mysqlC.commit()
+        name.delete(0, END)
+        email.delete(0, END)
+        password.delete(0, END)
+        identificador.delete(0, END)
+        messagebox.showinfo("Informacion", "usuarios agregado")
+        actualizar()
+    except Exception as e:
+        print (e)
+        mysqlC.rollback()
+        mysqlC.close()
+
+def actualizar():
+    for i in listbox.get_children():
+        listbox.delete(i)
+        mostrar()
+
+def obtener():
+    name.delete(0, END)
+    email.delete(0, END)
+    password.delete(0, END)
+    identificador.delete(0, END)
+
+    renglon = listbox.selection()[0]
+    seleccion = listbox.set(renglon)
+    identificador.insert(0, seleccion["Id"])
+    name.insert(0, seleccion["Nombre"])
+    email.insert(0, seleccion["Correo"])
+    password.insert(0, seleccion["Contraseña"])
+
 root = tk.Tk()
 root.geometry("800x500")
  
@@ -51,7 +90,7 @@ email.place(x=270, y=110)
 password = tk.Entry(root)
 password.place(x=270, y=140)
  
-tk.Button(root,text="Crear",command=show, height=5, width=10, font=("Arial",12)).place(x=100,y=170)
+tk.Button(root,text="Crear",command=add, height=5, width=10, font=("Arial",12)).place(x=100,y=170)
 tk.Button(root,text="Editar",command=show, height=5, width=10, font=("Arial",12)).place(x=250,y=170)
 tk.Button(root,text="Eliminar",command=show, height=5, width=10, font=("Arial",12)).place(x=400,y=170)
  
