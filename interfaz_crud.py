@@ -17,6 +17,27 @@ def mostrar():
         listbox.insert("", "end", values = (id, nombre, correo, contraseña))
         mysqlC.close()
 
+def edit():
+    usuario_add = name.get ()
+    correo_add = email.get()
+    contraseña_add = password.get()
+    id_add = identificador.get()
+    mysqlC = mysql.connector.connect(host = "localhost", user="root", password="", database= "base_de_datos")
+    micursos=mysqlC.cursor()
+    try:
+        micursos.execute(f"UPDATE usuarios set nombre='{usuario_add}', correo='{correo_add}', contraseña='{contraseña_add}' where id={id_add}")
+        mysqlC.commit()
+        name.delete(0, END)
+        email.delete(0, END)
+        password.delete(0, END)
+        identificador.delete(0, END)
+        messagebox.showinfo("Informacion", "usuario editado")
+        actualizar()
+    except Exception as e:
+        print (e)
+        mysqlC.rollback()
+        mysqlC.close()
+
 def add():
     usuario_add = name.get ()
     correo_add = email.get()
@@ -31,7 +52,7 @@ def add():
         email.delete(0, END)
         password.delete(0, END)
         identificador.delete(0, END)
-        messagebox.showinfo("Informacion", "usuarios agregado")
+        messagebox.showinfo("Informacion", "usuario agregado")
         actualizar()
     except Exception as e:
         print (e)
@@ -42,6 +63,25 @@ def actualizar():
     for i in listbox.get_children():
         listbox.delete(i)
         mostrar()
+
+def delete():
+    id_add = identificador.get()
+    mysqlC = mysql.connector.connect(host = "localhost", user="root", password="", database= "base_de_datos")
+    micursos=mysqlC.cursor()
+    try:
+        micursos.execute(f"DELETE FROM usuarios WHERE id={id_add}")
+        mysqlC.commit()
+        name.delete(0, END)
+        email.delete(0, END)
+        password.delete(0, END)
+        identificador.delete(0, END)
+        messagebox.showinfo("Informacion", "usuario eliminado")
+        actualizar()
+    except Exception as e:
+        print (e)
+        mysqlC.rollback()
+        mysqlC.close()
+
 
 def obtenerR(event):
     name.delete(0, END)
@@ -93,8 +133,8 @@ password = tk.Entry(root)
 password.place(x=270, y=140)
  
 tk.Button(root,text="Crear",command=add, height=5, width=10, font=("Arial",12)).place(x=100,y=170)
-tk.Button(root,text="Editar",command=show, height=5, width=10, font=("Arial",12)).place(x=250,y=170)
-tk.Button(root,text="Eliminar",command=show, height=5, width=10, font=("Arial",12)).place(x=400,y=170)
+tk.Button(root,text="Editar",command=edit, height=5, width=10, font=("Arial",12)).place(x=250,y=170)
+tk.Button(root,text="Eliminar",command=delete, height=5, width=10, font=("Arial",12)).place(x=400,y=170)
  
 columnas = ("Id","Nombre","Correo","Contraseña")
 listbox = ttk.Treeview(root,columns=columnas,show="headings")
