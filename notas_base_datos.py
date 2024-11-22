@@ -1,5 +1,5 @@
 #select {nombre, correo ##lo que quieras} from usuarios (nombre de la tabla) con un asterisco entre sin las lavves despues del select se manda todo
-## para mandar de uno en especifico select {} from (nombre de tabla) from (nombre de la tabla) where correo =" " and contraseña=""
+## para mandar de uno en especifico select {} from (nombre de tabla) where correo =" " and contraseña=""
 
 ### insert into __( ) values ("","","") 
 ### insert into usuarios values ("", "", "") para insertar en todas las filas
