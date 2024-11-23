@@ -40,16 +40,6 @@ def verificar_usuario():
         if conn.is_connected():
             conn.close()  
 
-def roles():
-    mysqlC = mysql.connector.connect(host = "localhost", user="root", password="", database= "proyecto")
-    micursos=mysqlC.cursor()
-    micursos.execute(f"select {rol} from usuarios where usuario = '{entry_usuario}' and contraseña = '{entry_contraseña}'")
-    lista = micursos.fetchall()
-
-    for i, (id, nombre, usuario, contraseña, rol) in enumerate (lista, start=1):
-        listbox.insert("", "end", values = (id, nombre, usuario, contraseña, rol))
-        mysqlC.close()
-
 
 
 def abrir_admin_ventana():
